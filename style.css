@@ -1,0 +1,32 @@
+.selectButton{
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  background: #a7abb1;
+  padding: 5px;
+  border: solid 2px orange; 
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+ 
+  
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.selectButton:hover{
+  background: #303030;
+  transition: 2s; 
+  color: rgb(255, 255, 255);
+}
+
+.selectButton:not(:hover){
+  transition: 3s; 
+}
+#wrapper{
+  background: #76a3dd;
+}
