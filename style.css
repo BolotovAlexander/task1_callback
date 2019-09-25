@@ -2,7 +2,9 @@
   width: 100px; 
   height: 100px;
   border-radius: 50%;
-  background: #a7abb1;
+  
+  background: #303030;
+  color: rgb(255, 255, 255);
   padding: 5px;
   border: solid 2px orange; 
   position: relative;
@@ -12,21 +14,21 @@
   left: 0;
   margin: auto;
  
-  
-
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .selectButton:hover{
-  background: #303030;
-  transition: 2s; 
-  color: rgb(255, 255, 255);
+  background: #8094b3;
+  color: rgb(8, 8, 8);
+  transition: 2s;
 }
 
 .selectButton:not(:hover){
   transition: 3s; 
 }
+
+
 #wrapper{
   background: #76a3dd;
 }
