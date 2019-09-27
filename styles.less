@@ -30,12 +30,16 @@
   align-items: center;
   justify-content: center;
 }
+.tableMixins{
+  border: solid 2px rgb(3, 2, 87);
+  padding-left: 10px;
+}
 
 body{
   background-color:#a4c8fd
 } 
 
-.selectButton{
+.startKnob{
   .colorCircleMixins;
   .displayMixins;
   width: 100px; 
@@ -46,7 +50,7 @@ body{
   transition: 2s;
 
 }
-.selectButton:hover{
+.startKnob:hover{
   .answerHoverMixins
 }
 
@@ -114,4 +118,22 @@ body{
 }
 .answerNo:hover{
   .answerHoverMixins
+}
+
+.table{
+  position: absolute;
+  width: 400px;
+  left: calc(50% - 200px) ;
+  top: calc(50% - 50px);
+  background-color: #cadfff;
+  border: solid 2px rgb(3, 2, 87);
+  border-collapse: collapse;
+}
+#heading{
+  .tableMixins;
+  font-weight: bold;
+  
+}
+#text{
+  .tableMixins
 }
