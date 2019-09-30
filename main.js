@@ -31,6 +31,7 @@
 
     function demandShowModalWindow(){
         if (modalWindowAnswer){ 
+            
             showModalWindow();
         }
         else{
@@ -51,7 +52,6 @@
         answerNo.innerHTML = "Неа";
         wrapperModalWindow.append(answerNo);
 
-        modalWindowAnswer = !modalWindowAnswer;
         yesOrNoListener();
     }; 
 
@@ -66,7 +66,7 @@
         answerNo.remove();
         answerYes.remove();
         modalQuestion.remove();
-        modalWindowAnswer = !modalWindowAnswer;
+        
     };
 
     function showLoader(){
@@ -78,8 +78,10 @@
     };
 
     function xhrWeather(){
+        modalWindowAnswer = false;
         let xhr = new XMLHttpRequest();
-        xhr.open('GET','http://api.openweathermap.org/data/2.5/weather?id=706483&units=metric&lang=ru&APPID=198588ef71465345ba2737e46108ac74');
+        /* xhr.open('GET','http://api.openweathermap.org/data/2.5/weather?id=706483&units=metric&lang=ru&APPID=198588ef71465345ba2737e46108ac74'); */
+        xhr.open('GET','./weather.json');
         xhr.send();
         showLoader();
 
@@ -87,12 +89,10 @@
             if (xhr.status != 200) {
                 alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); 
                 loading.remove();
-                modalWindowAnswer = !modalWindowAnswer;
             } 
             else { 
                 loading.remove();
-                modalWindowAnswer = !modalWindowAnswer;
-        
+                
                 data = JSON.parse(xhr.responseText);
                 weather[0] = data.name;
                 weather[1] = data.weather[0].description   
@@ -120,4 +120,3 @@
     }
 
 }
-/* проверка гита */
