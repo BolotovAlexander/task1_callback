@@ -13,9 +13,9 @@
 }
 .answerHoverMixins{
   background: #9cb6e7;
-  color: hsl(9, 98%, 50%);
-  font-size: 120%; 
-  
+  color: rgb(14, 12, 179);
+  font-size: 140%; 
+  font-weight: bold;
   transition: 2s;  
 }
 .colorCircleMixins{
@@ -57,23 +57,22 @@ body{
 
 .loading{
   .displayMixins;
-  width: 100px; 
-  height: 100px;
+  width: 80px; 
+  height: 80px;
   border-radius: 50%;
   border: solid 2px rgb(3, 2, 87); 
   position: absolute;
-  left: calc(50% - 50px);
-  top: calc(50% - 50px);
+  left: calc(50% - 40px);
+  top: calc(50% - 40px);
 
   background: #eb4605;
   color: rgb(255, 255, 255);
-  font-size: 23px;
   animation: ease-in-out f,  5s linear infinite f ;
 }
 @keyframes f {
   
   50% {
-    transform: scale(0.5);
+    transform: scale(0.7);
   }
   100% {
     transform: scale(1);
