@@ -38,22 +38,21 @@ for( let i=0; i<=documentElementArr.length; i++){
     startKnob.className = "startKnob";
     startKnob.innerHTML = "Кнопка";
     document.body.prepend(startKnob);
-    startKnob.addEventListener("click", demandShowModalWindow);
+    startKnob.addEventListener("click", wtf);
 
     wrapperModalWindow.className = "wrapperModalWindow";
     document.body.append(wrapperModalWindow);
 
+function wtf(){
+    return new Promise((resolve, reject) => {
+        if (modalWindowAnswer){resolve()}
+        else {reject()}
+        })
+        .then (showModalWindow,xhrWeather)
+        .then (yesOrNoListener)
+}
 
-    function demandShowModalWindow(){
-        if (modalWindowAnswer){ 
-            
-            showModalWindow();
-        }
-        else{
-            xhrWeather() 
-        }
-    };
-
+ 
     function showModalWindow(){
         modalQuestion.className = "modalQuestion";
         modalQuestion.innerHTML = "Вы уверены, что хотите получить данные о погоде?";
@@ -67,7 +66,7 @@ for( let i=0; i<=documentElementArr.length; i++){
         answerNo.innerHTML = "Неа";
         wrapperModalWindow.append(answerNo);
 
-        yesOrNoListener();
+       /*  yesOrNoListener(); */
     }; 
 
     function yesOrNoListener(){
