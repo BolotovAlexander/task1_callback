@@ -1,6 +1,6 @@
 ﻿window.onload= () =>{
 
-    let startKnob = document.createElement('div');
+    let startButton = document.createElement('div');
     let wrapperModalWindow = document.createElement('div');
     let modalQuestion = document.createElement('div');
     let answerYes = document.createElement('div');
@@ -8,7 +8,6 @@
     let loading = document.createElement('div'); 
     let tableWeather = '';
     let modalWindowAnswer = true;
-    let data = '';
     let weather = [];
     let tableKeyArr = [
         'Город',
@@ -18,41 +17,25 @@
         'Влажность,  %',
         'Давление,  мм.рт.ст'
     ];
-/* let documentElementArr = [
-    'startKnob',
-    'wrapperModalWindow',
-    'modalQuestion',
-    'answerYes',
-    'answerNo',
-    'loading'
-];
-let x = 1;
-for( let i=0; i<=documentElementArr.length; i++){
-    x = documentElementArr[i];
-    let `${x}` = document.createElement('div')
-}; */
 
 
-
-
-    startKnob.className = "startKnob";
-    startKnob.innerHTML = "Кнопка";
-    document.body.prepend(startKnob);
-    startKnob.addEventListener("click", wtf);
+    startButton.className = "startButton";
+    startButton.innerHTML = "Кнопка";
+    document.body.prepend(startButton);
+    startButton.addEventListener("click", demandShowModalWindow);
 
     wrapperModalWindow.className = "wrapperModalWindow";
     document.body.append(wrapperModalWindow);
 
-function wtf(){
+    function demandShowModalWindow(){
     return new Promise((resolve, reject) => {
         if (modalWindowAnswer){resolve()}
         else {reject()}
-        })
-        .then (showModalWindow,xhrWeather)
-        .then (yesOrNoListener)
-}
+    })
+    .then (showModalWindow,xhrWeather)
+    .then (yesOrNoListener)
+    };
 
- 
     function showModalWindow(){
         modalQuestion.className = "modalQuestion";
         modalQuestion.innerHTML = "Вы уверены, что хотите получить данные о погоде?";
@@ -65,13 +48,18 @@ function wtf(){
         answerNo.className = "answerNo";
         answerNo.innerHTML = "Неа";
         wrapperModalWindow.append(answerNo);
-
-       /*  yesOrNoListener(); */
     }; 
 
     function yesOrNoListener(){
-        answerYes.addEventListener("click", xhrWeather);
-        answerNo.addEventListener("click", closeModal);
+        wrapperModalWindow.addEventListener("click", yesOrNoButton);
+    };
+
+    function yesOrNoButton(){
+        return new Promise((resolve, reject) => {
+            if ( event.target == answerYes ){ resolve() }
+            if ( event.target == answerNo ){ reject() }
+        })
+        .then (xhrWeather,closeModal)    
     };
 
     function closeModal(){
@@ -91,35 +79,27 @@ function wtf(){
         document.body.append(loading);
     };
 
-    function xhrWeather(){
+    async function xhrWeather(){
         modalWindowAnswer = false;
-        let xhr = new XMLHttpRequest();
-        /* xhr.open('GET','http://api.openweathermap.org/data/2.5/weather?id=706483&units=metric&lang=ru&APPID=198588ef71465345ba2737e46108ac74'); */
-        xhr.open('GET','./weather.json');
-        xhr.send();
         showLoader();
 
-        xhr.onload = function() {
-            if (xhr.status != 200) {
-                alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); 
-                loading.remove();
-            } 
-            else { 
-                loading.remove();
-                
-                data = JSON.parse(xhr.responseText);
-                weather[0] = data.name;
-                weather[1] = data.weather[0].description   
-                weather[2] = data.main.temp;      
-                weather[3] = data.wind.speed;
-                weather[4] = data.main.humidity;
-                weather[5] = data.main.pressure;
+        let response = await fetch('./weather.json');
+        if (response.status != 200){
+            alert("Ошибка HTTP: " + response.status);
+            loading.remove();
+        };   
+        let data = await response.json(); 
+        loading.remove();
+        weather[0] = data.name;
+        weather[1] = data.weather[0].description   
+        weather[2] = data.main.temp;      
+        weather[3] = data.wind.speed;
+        weather[4] = data.main.humidity;
+        weather[5] = data.main.pressure;
         
-                weatherTableRender();
-            }
-        }
-    }
-
+        weatherTableRender();
+    };
+    
     function weatherTableRender(){
 
         tableWeather = document.createElement('table');
@@ -132,5 +112,4 @@ function wtf(){
         tableWeather.innerHTML = template; 
         document.body.append(tableWeather);
     }
-
-}
+};
